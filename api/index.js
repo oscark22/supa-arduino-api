@@ -51,6 +51,19 @@ app.post("/mkr", async (req, res) => {
   }
 });
 
+app.get("/esp", async (req, res) => {
+  const { data, error } = await supabase
+    .from("esp")
+    .select()
+    .limit(10)
+    .order("timestamp", { ascending: false });
+  if (error) {
+    res.send("an error has occurred.");
+  } else {
+    res.send(data);
+  }
+});
+
 app.post("/esp", async (req, res) => {
   const { data, error } = await supabase
     .from("esp")
@@ -64,6 +77,78 @@ app.post("/esp", async (req, res) => {
   }
 });
 
+app.put("/humidity", async (req, res) => {
+  const { data, error } = await supabase
+    .from("humidity")
+    .update({ threshold: req.body.threshold })
+    .eq("id", 1)
+    .select();
+
+  if (error) {
+    res.send("an error has occurred.");
+  } else {
+    res.send(data);
+  }
+});
+
+app.get("/humidity", async (req, res) => {
+  const { data, error } = await supabase.from("humidity").select().limit(1);
+
+  if (error) {
+    res.send("an error has occurred.");
+  } else {
+    res.send(data);
+  }
+});
+
+app.put("/pressure", async (req, res) => {
+  const { data, error } = await supabase
+    .from("pressure")
+    .update({ threshold: req.body.threshold })
+    .eq("id", 1)
+    .select();
+
+  if (error) {
+    res.send("an error has occurred.");
+  } else {
+    res.send(data);
+  }
+});
+
+app.get("/pressure", async (req, res) => {
+  const { data, error } = await supabase.from("pressure").select().limit(1);
+
+  if (error) {
+    res.send("an error has occurred.");
+  } else {
+    res.send(data);
+  }
+});
+
+app.put("/temperature", async (req, res) => {
+  const { data, error } = await supabase
+    .from("temperature")
+    .update({ threshold: req.body.threshold })
+    .eq("id", 1)
+    .select();
+
+  if (error) {
+    res.send("an error has occurred.");
+  } else {
+    res.send(data);
+  }
+});
+
+app.get("/temperature", async (req, res) => {
+  const { data, error } = await supabase.from("temperature").select().limit(1);
+
+  if (error) {
+    res.send("an error has occurred.");
+  } else {
+    res.send(data);
+  }
+});
+
 app.listen(8000, () => {
-  console.log("Listening on port 3000...");
+  console.log("Listening on port 8000...");
 });
